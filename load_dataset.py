@@ -153,7 +153,13 @@ def load_llama8b_dataset(problem_ids=None, max_problems=None, max_retries=3, use
         
         # Convert collected examples to Dataset
         if not llama8b_examples:
-            raise ValueError("No llama-8b data found in the dataset")
+            if problem_ids:
+                raise ValueError(
+                    f"No llama-8b data found for problem ID(s): {problem_ids}. "
+                    f"The problem ID(s) may not exist in the dataset, or they may not have llama-8b data."
+                )
+            else:
+                raise ValueError("No llama-8b data found in the dataset")
         
         if len(llama8b_examples) == 1:
             # Single split - return Dataset

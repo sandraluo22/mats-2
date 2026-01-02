@@ -1,0 +1,470 @@
+================================================================================
+CHUNKS FOR PROBLEM: problem_1591
+Total chunks: 152
+================================================================================
+
+Copy the chunks below, flip them, and paste them back in the same format.
+
+================================================================================
+CHUNK_000:
+Okay, so I need to figure out this interest rate problem.
+
+CHUNK_001:
+Dr. Fu Manchu has a bank account with an annual interest rate of 6 percent, but it compounds monthly.
+
+CHUNK_002:
+I need to find the equivalent annual interest rate, r percent, that would give the same return if it were compounded annually instead.
+
+CHUNK_003:
+Hmm, I remember something about effective annual rate from my studies.
+
+CHUNK_004:
+Let me try to recall how that works.
+
+CHUNK_005:
+First, compound interest.
+
+CHUNK_006:
+When interest is compounded more than once a year, the effective annual rate (EAR) is higher than the nominal rate.
+
+CHUNK_007:
+In this case, the nominal rate is 6%, but it's compounded monthly.
+
+CHUNK_008:
+So, to find the EAR, I should use the formula for compound interest and then find the equivalent annual rate.
+
+CHUNK_009:
+The compound interest formula is:
+
+CHUNK_010:
+\[ A = P \left(1 + \frac{r}{n}\right)^n \]
+
+CHUNK_011:
+Where:
+- \( A \) is the amount of money accumulated after n years, including interest.
+
+CHUNK_012:
+- \( P \) is the principal amount.
+
+CHUNK_013:
+- \( r \) is the annual interest rate (decimal).
+
+CHUNK_014:
+- \( n \) is the number of times that interest is compounded per year.
+
+CHUNK_015:
+But in this problem, I don't know the principal or the amount, but I guess since we're looking for the equivalent rate, the principal and the amount after a year should be the same for both compounding methods.
+
+CHUNK_016:
+So, if I consider the amount after one year with monthly compounding, it should equal the amount after one year with annual compounding.
+
+CHUNK_017:
+Let me denote:
+- \( P \) as the principal.
+
+CHUNK_018:
+- \( A_{monthly} \) as the amount after one year with monthly compounding.
+
+CHUNK_019:
+- \( A_{annual} \) as the amount after one year with annual compounding.
+
+CHUNK_020:
+Since both are for one year, I can set them equal:
+
+CHUNK_021:
+\[ A_{monthly} = A_{annual} \]
+
+CHUNK_022:
+Substituting the compound interest formula for both:
+
+CHUNK_023:
+\[ P \left(1 + \frac{0.06}{12}\right)^{12} = P \left(1 + r \right) \]
+
+CHUNK_024:
+Okay, so the P cancels out:
+
+CHUNK_025:
+\[ \left(1 + \frac{0.06}{12}\right)^{12} = 1 + r \]
+
+CHUNK_026:
+So, to find r, I can subtract 1 from both sides and then subtract 1 again?
+
+CHUNK_027:
+Wait, let's write it step by step.
+
+CHUNK_028:
+First, compute the inside of the left side:
+
+CHUNK_029:
+\[ 1 + \frac{0.06}{12} = 1 + 0.005 = 1.005 \]
+
+CHUNK_030:
+So, the equation becomes:
+
+CHUNK_031:
+\[ (1.005)^{12} = 1 + r \]
+
+CHUNK_032:
+Now, I need to calculate \( (1.005)^{12} \).
+
+CHUNK_033:
+I think I can do this using logarithms or a calculator, but since I'm just thinking, I'll try to remember that the formula for compound interest also relates to the effective annual rate.
+
+CHUNK_034:
+So, if I can compute \( (1 + \frac{r_{monthly}}{12})^{12} \), that gives the factor by which the principal grows in one year, and then I can set that equal to \( 1 + r_{annual} \), where \( r_{annual} \) is the effective annual rate.
+
+CHUNK_035:
+So, let me compute \( (1.005)^{12} \).
+
+CHUNK_036:
+I know that \( \ln(1.005) \) is approximately 0.004975.
+
+CHUNK_037:
+So, using the exponential function, \( e^{12 \times 0.004975} \).
+
+CHUNK_038:
+Let me compute 12 * 0.004975 first.
+
+CHUNK_039:
+12 * 0.004975 = 0.0597
+
+CHUNK_040:
+So, \( e^{0.0597} \) is approximately equal to...
+
+CHUNK_041:
+Hmm, I remember that \( e^{0.06} \) is about 1.0618.
+
+CHUNK_042:
+So, 0.0597 is just slightly less than 0.06, so the result will be slightly less than 1.0618.
+
+CHUNK_043:
+Maybe around 1.0615 or something.
+
+CHUNK_044:
+Alternatively, I can compute it step by step:
+
+CHUNK_045:
+1.005^1 = 1.005
+
+CHUNK_046:
+1.005^2 = (1.005)(1.005) = 1.010025
+
+CHUNK_047:
+1.005^3 = 1.010025 * 1.005 ≈ 1.015075125
+
+CHUNK_048:
+1.005^4 ≈ 1.015075125 * 1.005 ≈ 1.020150501
+
+CHUNK_049:
+1.005^5 ≈ 1.020150501 * 1.005 ≈ 1.025251002
+
+CHUNK_050:
+1.005^6 ≈ 1.025251002 * 1.005 ≈ 1.030301502
+
+CHUNK_051:
+1.005^7 ≈ 1.030301502 * 1.005 ≈ 1.035355506
+
+CHUNK_052:
+1.005^8 ≈ 1.035355506 * 1.005 ≈ 1.040408016
+
+CHUNK_053:
+1.005^9 ≈ 1.040408016 * 1.005 ≈ 1.045461025
+
+CHUNK_054:
+1.005^10 ≈ 1.045461025 * 1.005 ≈ 1.050525126
+
+CHUNK_055:
+1.005^11 ≈ 1.050525126 * 1.005 ≈ 1.055600127
+
+CHUNK_056:
+1.005^12 ≈ 1.055600127 * 1.005 ≈ 1.060660127
+
+CHUNK_057:
+So, approximately 1.060660127.
+
+CHUNK_058:
+Therefore, \( (1.005)^{12} ≈ 1.06066 \).
+
+CHUNK_059:
+So, that's equal to \( 1 + r \), so \( r = 1.06066 - 1 = 0.06066 \), which is 6.066%.
+
+CHUNK_060:
+But the question asks for the rate to the nearest hundredth, so that would be 6.07%.
+
+CHUNK_061:
+Wait, let me verify that calculation because earlier I thought it was about 1.0615, but when I computed step by step, it's about 1.06066.
+
+CHUNK_062:
+So, 1.06066 is approximately 1.0607 when rounded to four decimal places, but since we need to find r to the nearest hundredth, we can take 1.06066 as approximately 1.0607, so r is 0.0607, which is 6.07%.
+
+CHUNK_063:
+Alternatively, maybe I can use the formula for EAR directly.
+
+CHUNK_064:
+The effective annual rate formula is:
+
+CHUNK_065:
+\[ \text{EAR} = \left(1 + \frac{r}{n}\right)^n - 1 \]
+
+CHUNK_066:
+So, plugging in r = 0.06 and n = 12:
+
+CHUNK_067:
+\[ \text{EAR} = \left(1 + \frac{0.06}{12}\right)^{12} - 1 \]
+
+CHUNK_068:
+Which is exactly what we did before, and we found that to be approximately 0.06066, so 6.066%, which rounds to 6.07%.
+
+CHUNK_069:
+Wait, but just to make sure, maybe I should use a calculator to compute (1.005)^12 more accurately.
+
+CHUNK_070:
+Alternatively, I can use the formula for compound interest and calculate it step by step.
+
+CHUNK_071:
+Let me try computing 1.005 multiplied 12 times.
+
+CHUNK_072:
+1.005^1 = 1.005
+
+CHUNK_073:
+1.005^2 = 1.005 * 1.005 = 1.010025
+
+CHUNK_074:
+1.005^3 = 1.010025 * 1.005 = 1.015075125
+
+CHUNK_075:
+1.005^4 = 1.015075125 * 1.005 ≈ 1.020150501
+
+CHUNK_076:
+1.005^5 = 1.020150501 * 1.005 ≈ 1.025251002
+
+CHUNK_077:
+1.005^6 = 1.025251002 * 1.005 ≈ 1.030301502
+
+CHUNK_078:
+1.005^7 = 1.030301502 * 1.005 ≈ 1.035355506
+
+CHUNK_079:
+1.005^8 = 1.035355506 * 1.005 ≈ 1.040408016
+
+CHUNK_080:
+1.005^9 = 1.040408016 * 1.005 ≈ 1.045461025
+
+CHUNK_081:
+1.005^10 = 1.045461025 * 1.005 ≈ 1.050525126
+
+CHUNK_082:
+1.005^11 = 1.050525126 * 1.005 ≈ 1.055600127
+
+CHUNK_083:
+1.005^12 = 1.055600127 * 1.005 ≈ 1.060660127
+
+CHUNK_084:
+So, as we can see, it's approximately 1.060660127.
+
+CHUNK_085:
+So, subtracting 1 gives us 0.060660127, which is 6.0660127%.
+
+CHUNK_086:
+Rounded to the nearest hundredth is 6.07%.
+
+CHUNK_087:
+Therefore, the equivalent annual interest rate is 6.07%.
+
+CHUNK_088:
+Wait, just to double-check, let me compute it using logarithms.
+
+CHUNK_089:
+We have \( (1 + \frac{0.06}{12})^{12} = e^{12 \ln(1.005)} \).
+
+CHUNK_090:
+Compute \( \ln(1.005) \).
+
+CHUNK_091:
+Using Taylor series approximation, ln(1+x) ≈ x - x^2/2 + x^3/3 - x^4/4 + ...
+
+CHUNK_092:
+x = 0.005, so ln(1.005) ≈ 0.005 - (0.005)^2 / 2 + (0.005)^3 / 3 - (0.005)^4 / 4
+
+CHUNK_093:
+Compute each term:
+
+CHUNK_094:
+0.005 = 0.005
+
+CHUNK_095:
+(0.005)^2 = 0.000025, so 0.000025 / 2 = 0.0000125
+
+CHUNK_096:
+(0.005)^3 = 0.000000125, so /3 ≈ 0.0000000416667
+
+CHUNK_097:
+(0.005)^4 = 0.000000000625, so /4 ≈ 0.00000000015625
+
+CHUNK_098:
+So, ln(1.005) ≈ 0.005 - 0.0000125 + 0.0000000416667 - 0.00000000015625 ≈ 0.004987541
+
+CHUNK_099:
+Therefore, ln(1.005) ≈ 0.004987541
+
+CHUNK_100:
+Multiply by 12: 12 * 0.004987541 ≈ 0.059849692
+
+CHUNK_101:
+So, e^{0.059849692} ≈ ?
+
+CHUNK_102:
+We know that e^{0.05976} is approximately 1.0615, since ln(1.0615) ≈ 0.05976.
+
+CHUNK_103:
+Wait, let me recall that e^{0.06} ≈ 1.06183654.
+
+CHUNK_104:
+So, 0.059849692 is very close to 0.06, just slightly less.
+
+CHUNK_105:
+So, let me compute e^{0.059849692}.
+
+CHUNK_106:
+We can use the Taylor series expansion around 0.06:
+
+CHUNK_107:
+Let me set x = 0.06, and we have e^{x - 0.000150308}.
+
+CHUNK_108:
+So, e^{x - Δx} ≈ e^x * e^{-Δx} ≈ e^{0.06} * (1 - Δx + (Δx)^2 / 2 - ...
+
+CHUNK_109:
+) Compute Δx = 0.06 - 0.059849692 = 0.000150308
+
+CHUNK_110:
+So, e^{-Δx} ≈ 1 - Δx + (Δx)^2 / 2
+
+CHUNK_111:
+≈ 1 - 0.000150308 + (0.000150308)^2 / 2
+
+CHUNK_112:
+≈ 0.999849692 + 0.00000001118
+
+CHUNK_113:
+≈ 0.999849703
+
+CHUNK_114:
+Therefore, e^{0.059849692} ≈ e^{0.06} * 0.999849703 ≈ 1.06183654 * 0.999849703 ≈
+
+CHUNK_115:
+Compute 1.06183654 * 0.999849703:
+
+CHUNK_116:
+First, 1.06183654 * 1 = 1.06183654
+
+CHUNK_117:
+Subtract 1.06183654 * 0.000150308:
+
+CHUNK_118:
+1.06183654 * 0.000150308 ≈ 0.00015959
+
+CHUNK_119:
+So, 1.06183654 - 0.00015959 ≈ 1.06167695
+
+CHUNK_120:
+Therefore, e^{0.059849692} ≈ 1.06167695
+
+CHUNK_121:
+So, that's approximately 1.061677.
+
+CHUNK_122:
+Which is about 1.06168, so \( 1.06168 - 1 = 0.06168 \), which is 6.168%.
+
+CHUNK_123:
+So, that's approximately 6.17%.
+
+CHUNK_124:
+Wait, but earlier when I calculated step by step, it was about 1.06066, which is 6.066%, which is 6.07%.
+
+CHUNK_125:
+Hmm, so now I'm getting two different results: 6.07% vs 6.17%.
+
+CHUNK_126:
+That's a discrepancy.
+
+CHUNK_127:
+Wait, perhaps my logarithm approach is introducing some error because I used an approximation for ln(1.005).
+
+CHUNK_128:
+Maybe it's better to use a calculator.
+
+CHUNK_129:
+Alternatively, perhaps the effective annual rate is 6.06%, and when rounded to the nearest hundredth, it's 6.07%.
+
+CHUNK_130:
+Wait, let's see.
+
+CHUNK_131:
+The exact value is (1.005)^12.
+
+CHUNK_132:
+If I compute this using a calculator:
+
+CHUNK_133:
+1.005^12. Compute step by step:
+
+CHUNK_134:
+1.005^1 = 1.005
+
+CHUNK_135:
+1.005^2 = 1.005 * 1.005 = 1.010025
+
+CHUNK_136:
+1.005^3 = 1.010025 * 1.005 = 1.015075125
+
+CHUNK_137:
+1.005^4 = 1.015075125 * 1.005 ≈ 1.020150501
+
+CHUNK_138:
+1.005^5 ≈ 1.020150501 * 1.005 ≈ 1.025251002
+
+CHUNK_139:
+1.005^6 ≈ 1.025251002 * 1.005 ≈ 1.030301502
+
+CHUNK_140:
+1.005^7 ≈ 1.030301502 * 1.005 ≈ 1.035355506
+
+CHUNK_141:
+1.005^8 ≈ 1.035355506 * 1.005 ≈ 1.040408016
+
+CHUNK_142:
+1.005^9 ≈ 1.040408016 * 1.005 ≈ 1.045461025
+
+CHUNK_143:
+1.005^10 ≈ 1.045461025 * 1.005 ≈ 1.050525126
+
+CHUNK_144:
+1.005^11 ≈ 1.050525126 * 1.005 ≈ 1.055600127
+
+CHUNK_145:
+1.005^12 ≈ 1.055600127 * 1.005 ≈ 1.060660127
+
+CHUNK_146:
+So, (1.005)^12 ≈ 1.060660127, so 1.06066, which is approximately 6.066%, so 6.07% when rounded.
+
+CHUNK_147:
+Therefore, the correct effective annual rate is approximately 6.07%.
+
+CHUNK_148:
+So, the confusion came from the logarithm approximation, which gave me 6.17%, but the step-by-step multiplication gave me 6.066%, which is 6.07%.
+
+CHUNK_149:
+So, I think the step-by-step is more accurate here.
+
+CHUNK_150:
+Therefore, the equivalent annual interest rate is 6.07%.
+
+CHUNK_151:
+**Final Answer**
+The equivalent annual interest rate is \boxed{6.07}.
+
+================================================================================
+END OF CHUNKS
+================================================================================

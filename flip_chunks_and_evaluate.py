@@ -50,47 +50,6 @@ class ChunkFlipper:
         
         print(f"Model loaded on {device}")
     
-    def flip_chunk(self, chunk_text: str, problem_context: str) -> str:
-        """
-        Generate a "flipped" incorrect version of a chunk.
-        Introduces small arithmetic/logical errors.
-        
-        Args:
-            chunk_text: The original chunk text to flip
-            problem_context: The problem statement for context
-        
-        Returns:
-            Flipped chunk text with errors introduced
-        """
-        prompt = f"""You are given a mathematical problem and a reasoning step. 
-Your task is to create a slightly incorrect version of this reasoning step by introducing a small error:
-- If it's arithmetic, introduce a small calculation mistake (like misplacing a number or sign)
-- If it's logical, introduce an incorrect logical step or conclusion
-- Keep the overall structure and style similar
-
-Problem: {problem_context}
-
-Original reasoning step: {chunk_text}
-
-Generate a slightly incorrect version of this reasoning step (introduce a subtle error):"""
-        
-        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
-        
-        with torch.no_grad():
-            outputs = self.model.generate(
-                **inputs,
-                max_new_tokens=200,
-                temperature=0.7,
-                do_sample=True,
-                pad_token_id=self.tokenizer.eos_token_id
-            )
-        
-        response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
-        # Extract just the flipped chunk (remove the prompt)
-        flipped_chunk = response[len(prompt):].strip()
-        
-        return flipped_chunk
-    
     def solve_with_flipped_chunk(
         self, 
         problem: str, 
@@ -112,15 +71,16 @@ Generate a slightly incorrect version of this reasoning step (introduce a subtle
         Returns:
             Dictionary with solution details
         """
-        # Build the prompt with original chunks except the flipped one
+        # Build the prompt with original chunks up to the flipped chunk, then the flipped chunk
+        # Don't provide chunks after the flipped chunk - let the model generate from there
         cot_parts = []
-        for i, chunk in enumerate(original_chunks):
+        for i in range(chunk_idx + 1):  # Only go up to and including the flipped chunk
             if i == chunk_idx:
                 cot_parts.append(flipped_chunk)  # Use flipped chunk here
             else:
-                cot_parts.append(chunk)  # Use original chunks elsewhere
+                cot_parts.append(original_chunks[i])  # Use original chunks up to this point
         
-        # Combine into full chain of thought (with flipped chunk inserted)
+        # Combine into full chain of thought (only up to the flipped chunk)
         full_cot = " ".join(cot_parts)
         
         prompt = f"""Problem: {problem}
@@ -128,7 +88,7 @@ Generate a slightly incorrect version of this reasoning step (introduce a subtle
 Reasoning step by step:
 {full_cot}
 
-Continue solving from here and provide the final answer:"""
+Continue solving from here. Therefore, the final answer is \\boxed{{:"""
         
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
         input_length = inputs['input_ids'].shape[1]
@@ -149,6 +109,9 @@ Continue solving from here and provide the final answer:"""
         full_response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
         solution_text = full_response[len(prompt):].strip()
         
+        # Build full COT starting from the flipped chunk (flipped chunk + all generated text)
+        full_cot_from_flipped = f"{flipped_chunk} {solution_text}".strip()
+        
         # Count sentences (simple heuristic: split by periods)
         sentences = [s.strip() for s in solution_text.split('.') if s.strip()]
         sentence_count = len(sentences)
@@ -167,10 +130,11 @@ Continue solving from here and provide the final answer:"""
                 uncertainty_occurrences.append(f"{word}:{count}")
         
         # Extract final answer (try to find boxed answer or last number)
+        # The prompt ends with "The final answer is:" so the model should respond with the answer
         final_answer = self.extract_answer(solution_text)
         
         return {
-            "full_cot": solution_text,
+            "full_cot": full_cot_from_flipped,  # Full COT starting from flipped chunk
             "sentence_count": sentence_count,
             "token_count": token_count,
             "uncertainty_word_count": uncertainty_count,
@@ -262,6 +226,50 @@ def extract_chunks(chunks_labeled: List[Dict]) -> List[str]:
                 chunks.append(chunk_text)
     return chunks
 
+def load_flipped_chunks(flipped_chunks_file: str) -> List[str]:
+    """
+    Load pre-flipped chunks from a file.
+    
+    Expected format:
+    CHUNK_000:
+    <flipped chunk text>
+    
+    CHUNK_001:
+    <flipped chunk text>
+    ...
+    
+    Args:
+        flipped_chunks_file: Path to file containing flipped chunks
+    
+    Returns:
+        List of flipped chunk texts in order
+    """
+    import os
+    flipped_chunks = []
+    
+    # Check if file exists
+    if not os.path.exists(flipped_chunks_file):
+        raise FileNotFoundError(f"Flipped chunks file not found: {flipped_chunks_file}")
+    
+    with open(flipped_chunks_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    if not content:
+        raise ValueError(f"Flipped chunks file is empty: {flipped_chunks_file}")
+    
+    # Split by CHUNK_ pattern (handle both Unix and Windows line endings)
+    pattern = r'CHUNK_\d+:\s*\r?\n'
+    parts = re.split(pattern, content)
+    
+    # First part is header, skip it
+    for part in parts[1:]:
+        # Remove trailing whitespace and empty lines
+        chunk = part.strip()
+        if chunk:
+            flipped_chunks.append(chunk)
+    
+    return flipped_chunks
+
 def check_correctness(final_answer: str, ground_truth_answer: str) -> bool:
     """Check if the final answer matches ground truth (loose matching)."""
     # Normalize: remove whitespace, convert to lowercase
@@ -281,12 +289,13 @@ def check_correctness(final_answer: str, ground_truth_answer: str) -> bool:
     
     return False
 
-def run_experiment(problem_id: str, output_file: str = "flip_chunk_results.json"):
+def run_experiment(problem_id: str, flipped_chunks_file: str = "flipped_chunks.txt", output_file: str = "flip_chunk_results.json"):
     """
-    Run the full experiment: flip chunks and evaluate.
+    Run the full experiment: evaluate with pre-flipped chunks.
     
     Args:
         problem_id: Problem ID to use
+        flipped_chunks_file: Path to file containing pre-flipped chunks (defaults to "flipped_chunks.txt")
         output_file: File to save results
     """
     print("="*80)
@@ -326,6 +335,51 @@ def run_experiment(problem_id: str, output_file: str = "flip_chunk_results.json"
     chunks = extract_chunks(problem_data['chunks_labeled'])
     print(f"\nFound {len(chunks)} chunks in original COT")
     
+    # Load pre-flipped chunks (required)
+    import os
+    abs_path = os.path.abspath(flipped_chunks_file)
+    print(f"\nLoading pre-flipped chunks from: {flipped_chunks_file}")
+    print(f"Absolute path: {abs_path}")
+    print(f"File exists: {os.path.exists(flipped_chunks_file)}")
+    
+    if not os.path.exists(flipped_chunks_file):
+        print(f"ERROR: Flipped chunks file not found: {flipped_chunks_file}")
+        return
+    
+    # Check if file looks like a JSON results file (common mistake)
+    if flipped_chunks_file.endswith('.json') or 'results' in flipped_chunks_file.lower():
+        print(f"\nWARNING: The file '{flipped_chunks_file}' looks like a results JSON file, not a flipped chunks file!")
+        print("The flipped chunks file should be a text file with CHUNK_000:, CHUNK_001:, etc. format.")
+        print("Did you mean to use 'flipped_chunks.txt' instead?")
+        print("\nCorrect usage:")
+        print(f"  python flip_chunks_and_evaluate.py {problem_id} flipped_chunks.txt [output_file]")
+        return
+    
+    try:
+        pre_flipped_chunks = load_flipped_chunks(flipped_chunks_file)
+        print(f"Successfully loaded {len(pre_flipped_chunks)} pre-flipped chunks")
+        
+        if len(pre_flipped_chunks) == 0:
+            print(f"ERROR: No chunks found in file: {flipped_chunks_file}")
+            print("Please ensure the file contains chunks in the format:")
+            print("  CHUNK_000:")
+            print("  <chunk text>")
+            print("  CHUNK_001:")
+            print("  <chunk text>")
+            print("  ...")
+            return
+        
+        if len(pre_flipped_chunks) != len(chunks):
+            print(f"ERROR: Number of flipped chunks ({len(pre_flipped_chunks)}) doesn't match original chunks ({len(chunks)})")
+            print("Please ensure the flipped chunks file has the correct number of chunks.")
+            return
+        print(f"Loaded {len(pre_flipped_chunks)} pre-flipped chunks (matches {len(chunks)} original chunks)")
+    except Exception as e:
+        print(f"Error loading flipped chunks file: {e}")
+        import traceback
+        traceback.print_exc()
+        return
+    
     # Initialize model
     flipper = ChunkFlipper()
     
@@ -346,14 +400,10 @@ def run_experiment(problem_id: str, output_file: str = "flip_chunk_results.json"
         print(f"{'='*80}")
         print(f"Original chunk: {chunks[chunk_idx][:150]}...")
         
-        # Step 1: Flip the chunk
-        print("\nStep 1: Generating flipped chunk...")
-        try:
-            flipped_chunk = flipper.flip_chunk(chunks[chunk_idx], problem_text)
-            print(f"Flipped chunk: {flipped_chunk[:150]}...")
-        except Exception as e:
-            print(f"Error flipping chunk: {e}")
-            continue
+        # Get flipped chunk from file
+        print("\nUsing pre-flipped chunk from file...")
+        flipped_chunk = pre_flipped_chunks[chunk_idx]
+        print(f"Flipped chunk: {flipped_chunk[:150]}...")
         
         # Step 2: Solve with flipped chunk
         print("\nStep 2: Solving with flipped chunk...")
@@ -402,28 +452,64 @@ def run_experiment(problem_id: str, output_file: str = "flip_chunk_results.json"
     print(f"\nProcessed {len(results['experiments'])} chunks")
     print(f"Results saved to: {output_file}")
     
+    # Summary of final answers
+    print(f"\n{'='*80}")
+    print("FINAL ANSWERS SUMMARY")
+    print(f"{'='*80}")
+    print(f"Ground truth answer: {ground_truth}")
+    print(f"\nChunk | Final Answer | Correct")
+    print("-" * 80)
+    for exp in results['experiments']:
+        chunk_idx = exp.get('flipped_chunk_idx', 'N/A')
+        final_answer = exp.get('final_answer', 'N/A')
+        is_correct = exp.get('is_correct', False)
+        correct_marker = "✓" if is_correct else "✗"
+        print(f"  {chunk_idx:4d} | {final_answer:20s} | {correct_marker}")
+    
+    # Count correct vs incorrect
+    correct_count = sum(1 for exp in results['experiments'] if exp.get('is_correct', False))
+    incorrect_count = len(results['experiments']) - correct_count
+    print(f"\nSummary: {correct_count} correct, {incorrect_count} incorrect out of {len(results['experiments'])} experiments")
+    print(f"{'='*80}")
+    
     return results
 
 if __name__ == "__main__":
     import sys
     
     if len(sys.argv) < 2:
-        print("Usage: python flip_chunks_and_evaluate.py <problem_id> [output_file]")
-        print("Example: python flip_chunks_and_evaluate.py problem_330")
+        print("Usage: python flip_chunks_and_evaluate.py <problem_id> [flipped_chunks_file] [output_file]")
+        print("Example: python flip_chunks_and_evaluate.py problem_1591")
+        print("Example: python flip_chunks_and_evaluate.py problem_1591 flipped_chunks.txt")
+        print("Example: python flip_chunks_and_evaluate.py problem_1591 flipped_chunks.txt results.json")
         print("\nNote: This script requires:")
         print("  - GPU with at least 16GB VRAM (for 8B model)")
         print("  - Will take significant time (minutes to hours depending on number of chunks)")
         print("  - Results are saved incrementally as each chunk is processed")
+        print("  - flipped_chunks_file defaults to 'flipped_chunks.txt' if not provided")
         sys.exit(1)
     
     problem_id = sys.argv[1]
-    output_file = sys.argv[2] if len(sys.argv) > 2 else "flip_chunk_results.json"
+    # If second arg is provided and doesn't look like an output file, use it as flipped_chunks_file
+    # Otherwise default to flipped_chunks.txt
+    if len(sys.argv) > 2:
+        arg2 = sys.argv[2]
+        # If it ends with .json and has 'result' in name, it's probably the output file
+        if arg2.endswith('.json') and ('result' in arg2.lower() or 'output' in arg2.lower()):
+            flipped_chunks_file = "flipped_chunks.txt"
+            output_file = arg2
+        else:
+            flipped_chunks_file = arg2
+            output_file = sys.argv[3] if len(sys.argv) > 3 else "flip_chunk_results.json"
+    else:
+        flipped_chunks_file = "flipped_chunks.txt"
+        output_file = "flip_chunk_results.json"
     
     print("\nWARNING: This is computationally intensive!")
     print("  - Model: DeepSeek-R1-Distill-Llama-8B (~16GB GPU memory)")
-    print("  - Time: ~2-5 minutes per chunk")
+    print(f"  - Using pre-flipped chunks from: {flipped_chunks_file}")
     print("  - Results saved incrementally to:", output_file)
     print()
     
-    run_experiment(problem_id, output_file)
+    run_experiment(problem_id, flipped_chunks_file, output_file)
 

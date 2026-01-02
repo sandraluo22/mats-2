@@ -55,6 +55,7 @@ models/
 *.pdf
 flip_chunk_results.json
 downloaded_problems.json
+*_results.json
 
 # Logs
 *.log
