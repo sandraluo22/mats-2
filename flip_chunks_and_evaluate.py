@@ -295,7 +295,17 @@ def run_experiment(problem_id: str, output_file: str = "flip_chunk_results.json"
     
     # Load dataset
     print(f"\nLoading dataset and problem {problem_id}...")
-    dataset = load_llama8b_dataset(max_problems=10)
+    # Try to load from local saved dataset first (faster, no network needed)
+    import os
+    local_dataset_path = f"{problem_id}_dataset"
+    if os.path.exists(local_dataset_path):
+        print(f"Loading from local dataset: {local_dataset_path}")
+        from datasets import load_from_disk
+        dataset = load_from_disk(local_dataset_path)
+    else:
+        print(f"Local dataset not found, downloading via streaming...")
+        # Load only the specific problem ID to save time and space
+        dataset = load_llama8b_dataset(problem_ids=[problem_id])
     problem_data = load_problem_data(dataset, problem_id)
     
     if not problem_data['problem_json']:
