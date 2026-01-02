@@ -69,9 +69,17 @@ logs/
 *.csv
 *.h5
 *.hdf5
+*.arrow
+
+# Dataset directories
+*_dataset/
+problem_*_dataset/
 
 # Temporary files
 tmp/
 temp/
 *.tmp
 
+problem_1591.json
+problem_1591_dataset/
+*.arrow
