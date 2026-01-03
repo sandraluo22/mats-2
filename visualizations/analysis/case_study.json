@@ -1,0 +1,545 @@
+{
+  "flip_chunks": {
+    "total_sentence_count": {
+      "active_computation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 48,
+            "value": 513.0
+          },
+          "average": {
+            "chunk_idx": 39,
+            "value": 372.0
+          },
+          "below_average": {
+            "chunk_idx": 35,
+            "value": 291.0
+          }
+        },
+        "debrief": "Selection for active_computation category, total_sentence_count statistic (flip experiments):\n  - Rollout data: median=374.0, mean=427.4, Q75=513.0, Q25=269.0\n  - Experiment data: median=191.5, mean=278.7, n=84\n  - Above average: Chunk 48 (value=513.0, above Q75=513.0)\n  - Average: Chunk 39 (value=372.0, near median=374.0)\n  - Below average: Chunk 35 (value=291.0, below Q25=269.0)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "active_computation"
+      },
+      "fact_retrieval": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 5,
+            "value": 555.0
+          },
+          "average": {
+            "chunk_idx": 65,
+            "value": 428.0
+          },
+          "below_average": {
+            "chunk_idx": 4,
+            "value": 274.0
+          }
+        },
+        "debrief": "Selection for fact_retrieval category, total_sentence_count statistic (flip experiments):\n  - Rollout data: median=380.0, mean=440.6, Q75=573.0, Q25=258.0\n  - Experiment data: median=280.0, mean=338.4, n=21\n  - Above average: Chunk 5 (value=555.0, above Q75=573.0)\n  - Average: Chunk 65 (value=428.0, near median=380.0)\n  - Below average: Chunk 4 (value=274.0, below Q25=258.0)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "fact_retrieval"
+      },
+      "final_answer_emission": {
+        "representatives": {
+          "below_average": {
+            "chunk_idx": 151,
+            "value": 46.0
+          }
+        },
+        "debrief": "Selection for final_answer_emission category, total_sentence_count statistic (flip experiments):\n  - Rollout data: median=388.5, mean=396.6, Q75=404.0, Q25=379.0\n  - Experiment data: median=46.0, mean=46.0, n=1\n  - Below average: Chunk 151 (value=46.0, below Q25=379.0)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "final_answer_emission"
+      },
+      "plan_generation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 34,
+            "value": 594.0
+          },
+          "average": {
+            "chunk_idx": 20,
+            "value": 466.0
+          },
+          "below_average": {
+            "chunk_idx": 21,
+            "value": 209.0
+          }
+        },
+        "debrief": "Selection for plan_generation category, total_sentence_count statistic (flip experiments):\n  - Rollout data: median=412.5, mean=466.2, Q75=600.2, Q25=281.0\n  - Experiment data: median=281.5, mean=307.4, n=12\n  - Above average: Chunk 34 (value=594.0, above Q75=600.2)\n  - Average: Chunk 20 (value=466.0, near median=412.5)\n  - Below average: Chunk 21 (value=209.0, below Q25=281.0)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "plan_generation"
+      },
+      "problem_setup": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 0,
+            "value": 587.0
+          },
+          "average": {
+            "chunk_idx": 17,
+            "value": 339.0
+          },
+          "below_average": {
+            "chunk_idx": 2,
+            "value": 285.0
+          }
+        },
+        "debrief": "Selection for problem_setup category, total_sentence_count statistic (flip experiments):\n  - Rollout data: median=353.5, mean=398.6, Q75=510.2, Q25=227.0\n  - Experiment data: median=463.0, mean=443.2, n=6\n  - Above average: Chunk 0 (value=587.0, above Q75=510.2)\n  - Average: Chunk 17 (value=339.0, near median=353.5)\n  - Below average: Chunk 2 (value=285.0, below Q25=227.0)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "problem_setup"
+      },
+      "result_consolidation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 146,
+            "value": 446.0
+          },
+          "average": {
+            "chunk_idx": 57,
+            "value": 420.0
+          },
+          "below_average": {
+            "chunk_idx": 149,
+            "value": 292.0
+          }
+        },
+        "debrief": "Selection for result_consolidation category, total_sentence_count statistic (flip experiments):\n  - Rollout data: median=381.0, mean=432.0, Q75=458.0, Q25=291.8\n  - Experiment data: median=195.5, mean=255.3, n=14\n  - Above average: Chunk 146 (value=446.0, above Q75=458.0)\n  - Average: Chunk 57 (value=420.0, near median=381.0)\n  - Below average: Chunk 149 (value=292.0, below Q25=291.8)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "result_consolidation"
+      },
+      "uncertainty_management": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 43,
+            "value": 656.0
+          },
+          "average": {
+            "chunk_idx": 130,
+            "value": 470.0
+          },
+          "below_average": {
+            "chunk_idx": 127,
+            "value": 303.0
+          }
+        },
+        "debrief": "Selection for uncertainty_management category, total_sentence_count statistic (flip experiments):\n  - Rollout data: median=420.0, mean=499.0, Q75=654.2, Q25=303.8\n  - Experiment data: median=484.5, mean=409.4, n=14\n  - Above average: Chunk 43 (value=656.0, above Q75=654.2)\n  - Average: Chunk 130 (value=470.0, near median=420.0)\n  - Below average: Chunk 127 (value=303.0, below Q25=303.8)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "uncertainty_management"
+      }
+    },
+    "total_token_count": {
+      "active_computation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 96,
+            "value": 4855.0
+          },
+          "average": {
+            "chunk_idx": 118,
+            "value": 3552.0
+          },
+          "below_average": {
+            "chunk_idx": 29,
+            "value": 2768.0
+          }
+        },
+        "debrief": "Selection for active_computation category, total_token_count statistic (flip experiments):\n  - Rollout data: median=3619.0, mean=4121.9, Q75=4875.5, Q25=2804.0\n  - Experiment data: median=1650.5, mean=2569.2, n=84\n  - Above average: Chunk 96 (value=4855.0, above Q75=4875.5)\n  - Average: Chunk 118 (value=3552.0, near median=3619.0)\n  - Below average: Chunk 29 (value=2768.0, below Q25=2804.0)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "active_computation"
+      },
+      "fact_retrieval": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 10,
+            "value": 5445.0
+          },
+          "average": {
+            "chunk_idx": 131,
+            "value": 3650.0
+          },
+          "below_average": {
+            "chunk_idx": 64,
+            "value": 2552.0
+          }
+        },
+        "debrief": "Selection for fact_retrieval category, total_token_count statistic (flip experiments):\n  - Rollout data: median=3771.5, mean=4240.8, Q75=5364.2, Q25=2740.0\n  - Experiment data: median=2552.0, mean=3235.2, n=21\n  - Above average: Chunk 10 (value=5445.0, above Q75=5364.2)\n  - Average: Chunk 131 (value=3650.0, near median=3771.5)\n  - Below average: Chunk 64 (value=2552.0, below Q25=2740.0)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "fact_retrieval"
+      },
+      "final_answer_emission": {
+        "representatives": {
+          "below_average": {
+            "chunk_idx": 151,
+            "value": 535.0
+          }
+        },
+        "debrief": "Selection for final_answer_emission category, total_token_count statistic (flip experiments):\n  - Rollout data: median=3723.0, mean=3760.2, Q75=3811.5, Q25=3621.8\n  - Experiment data: median=535.0, mean=535.0, n=1\n  - Below average: Chunk 151 (value=535.0, below Q25=3621.8)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "final_answer_emission"
+      },
+      "plan_generation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 34,
+            "value": 6070.0
+          },
+          "average": {
+            "chunk_idx": 132,
+            "value": 4114.0
+          },
+          "below_average": {
+            "chunk_idx": 20,
+            "value": 3711.0
+          }
+        },
+        "debrief": "Selection for plan_generation category, total_token_count statistic (flip experiments):\n  - Rollout data: median=4070.5, mean=4531.2, Q75=5684.8, Q25=2998.2\n  - Experiment data: median=2700.5, mean=2840.2, n=12\n  - Above average: Chunk 34 (value=6070.0, above Q75=5684.8)\n  - Average: Chunk 132 (value=4114.0, near median=4070.5)\n  - Below average: Chunk 20 (value=3711.0, below Q25=2998.2)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "plan_generation"
+      },
+      "problem_setup": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 0,
+            "value": 6015.0
+          },
+          "average": {
+            "chunk_idx": 17,
+            "value": 2947.0
+          },
+          "below_average": {
+            "chunk_idx": 2,
+            "value": 2251.0
+          }
+        },
+        "debrief": "Selection for problem_setup category, total_token_count statistic (flip experiments):\n  - Rollout data: median=3597.0, mean=3976.4, Q75=5025.5, Q25=2558.5\n  - Experiment data: median=4481.0, mean=4134.3, n=6\n  - Above average: Chunk 0 (value=6015.0, above Q75=5025.5)\n  - Average: Chunk 17 (value=2947.0, near median=3597.0)\n  - Below average: Chunk 2 (value=2251.0, below Q25=2558.5)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "problem_setup"
+      },
+      "result_consolidation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 123,
+            "value": 4262.0
+          },
+          "average": {
+            "chunk_idx": 57,
+            "value": 3683.0
+          },
+          "below_average": {
+            "chunk_idx": 147,
+            "value": 1034.0
+          }
+        },
+        "debrief": "Selection for result_consolidation category, total_token_count statistic (flip experiments):\n  - Rollout data: median=3658.0, mean=4112.0, Q75=4352.5, Q25=3008.0\n  - Experiment data: median=2358.5, mean=2455.3, n=14\n  - Above average: Chunk 123 (value=4262.0, above Q75=4352.5)\n  - Average: Chunk 57 (value=3683.0, near median=3658.0)\n  - Below average: Chunk 147 (value=1034.0, below Q25=3008.0)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "result_consolidation"
+      },
+      "uncertainty_management": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 15,
+            "value": 6044.0
+          },
+          "average": {
+            "chunk_idx": 130,
+            "value": 4130.0
+          },
+          "below_average": {
+            "chunk_idx": 27,
+            "value": 3259.0
+          }
+        },
+        "debrief": "Selection for uncertainty_management category, total_token_count statistic (flip experiments):\n  - Rollout data: median=4144.5, mean=4741.7, Q75=6074.2, Q25=3149.0\n  - Experiment data: median=4145.0, mean=3453.4, n=14\n  - Above average: Chunk 15 (value=6044.0, above Q75=6074.2)\n  - Average: Chunk 130 (value=4130.0, near median=4144.5)\n  - Below average: Chunk 27 (value=3259.0, below Q25=3149.0)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "uncertainty_management"
+      }
+    },
+    "total_uncertainty_word_count": {
+      "active_computation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 53,
+            "value": 30.0
+          },
+          "average": {
+            "chunk_idx": 35,
+            "value": 22.0
+          },
+          "below_average": {
+            "chunk_idx": 98,
+            "value": 14.0
+          }
+        },
+        "debrief": "Selection for active_computation category, total_uncertainty_word_count statistic (flip experiments):\n  - Rollout data: median=22.0, mean=25.0, Q75=30.0, Q25=13.0\n  - Experiment data: median=7.0, mean=17.1, n=71\n  - Above average: Chunk 53 (value=30.0, above Q75=30.0)\n  - Average: Chunk 35 (value=22.0, near median=22.0)\n  - Below average: Chunk 98 (value=14.0, below Q25=13.0)",
+        "statistic_name": "Total Uncertainty Word Count",
+        "function_tag": "active_computation"
+      },
+      "fact_retrieval": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 131,
+            "value": 35.0
+          },
+          "average": {
+            "chunk_idx": 3,
+            "value": 27.0
+          },
+          "below_average": {
+            "chunk_idx": 4,
+            "value": 19.0
+          }
+        },
+        "debrief": "Selection for fact_retrieval category, total_uncertainty_word_count statistic (flip experiments):\n  - Rollout data: median=27.0, mean=32.5, Q75=41.0, Q25=18.0\n  - Experiment data: median=27.0, mean=36.0, n=17\n  - Above average: Chunk 131 (value=35.0, above Q75=41.0)\n  - Average: Chunk 3 (value=27.0, near median=27.0)\n  - Below average: Chunk 4 (value=19.0, below Q25=18.0)",
+        "statistic_name": "Total Uncertainty Word Count",
+        "function_tag": "fact_retrieval"
+      },
+      "plan_generation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 8,
+            "value": 42.0
+          },
+          "average": {
+            "chunk_idx": 128,
+            "value": 26.0
+          },
+          "below_average": {
+            "chunk_idx": 34,
+            "value": 20.0
+          }
+        },
+        "debrief": "Selection for plan_generation category, total_uncertainty_word_count statistic (flip experiments):\n  - Rollout data: median=27.0, mean=32.8, Q75=42.0, Q25=17.0\n  - Experiment data: median=12.0, mean=18.4, n=11\n  - Above average: Chunk 8 (value=42.0, above Q75=42.0)\n  - Average: Chunk 128 (value=26.0, near median=27.0)\n  - Below average: Chunk 34 (value=20.0, below Q25=17.0)",
+        "statistic_name": "Total Uncertainty Word Count",
+        "function_tag": "plan_generation"
+      },
+      "problem_setup": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 18,
+            "value": 34.0
+          },
+          "average": {
+            "chunk_idx": 0,
+            "value": 31.0
+          },
+          "below_average": {
+            "chunk_idx": 2,
+            "value": 20.0
+          }
+        },
+        "debrief": "Selection for problem_setup category, total_uncertainty_word_count statistic (flip experiments):\n  - Rollout data: median=30.0, mean=35.2, Q75=45.0, Q25=20.0\n  - Experiment data: median=22.0, mean=24.7, n=6\n  - Above average: Chunk 18 (value=34.0, above Q75=45.0)\n  - Average: Chunk 0 (value=31.0, near median=30.0)\n  - Below average: Chunk 2 (value=20.0, below Q25=20.0)",
+        "statistic_name": "Total Uncertainty Word Count",
+        "function_tag": "problem_setup"
+      },
+      "result_consolidation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 57,
+            "value": 30.0
+          },
+          "average": {
+            "chunk_idx": 146,
+            "value": 17.0
+          },
+          "below_average": {
+            "chunk_idx": 58,
+            "value": 13.0
+          }
+        },
+        "debrief": "Selection for result_consolidation category, total_uncertainty_word_count statistic (flip experiments):\n  - Rollout data: median=22.0, mean=24.3, Q75=27.0, Q25=13.0\n  - Experiment data: median=15.0, mean=19.6, n=10\n  - Above average: Chunk 57 (value=30.0, above Q75=27.0)\n  - Average: Chunk 146 (value=17.0, near median=22.0)\n  - Below average: Chunk 58 (value=13.0, below Q25=13.0)",
+        "statistic_name": "Total Uncertainty Word Count",
+        "function_tag": "result_consolidation"
+      },
+      "uncertainty_management": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 61,
+            "value": 39.0
+          },
+          "average": {
+            "chunk_idx": 130,
+            "value": 30.0
+          },
+          "below_average": {
+            "chunk_idx": 127,
+            "value": 18.0
+          }
+        },
+        "debrief": "Selection for uncertainty_management category, total_uncertainty_word_count statistic (flip experiments):\n  - Rollout data: median=26.0, mean=30.8, Q75=39.0, Q25=17.0\n  - Experiment data: median=25.5, mean=26.3, n=14\n  - Above average: Chunk 61 (value=39.0, above Q75=39.0)\n  - Average: Chunk 130 (value=30.0, near median=26.0)\n  - Below average: Chunk 127 (value=18.0, below Q25=17.0)",
+        "statistic_name": "Total Uncertainty Word Count",
+        "function_tag": "uncertainty_management"
+      }
+    }
+  },
+  "ablate_chunks": {
+    "total_sentence_count": {
+      "fact_retrieval": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 3,
+            "value": 861.0
+          },
+          "below_average": {
+            "chunk_idx": 41,
+            "value": 124.0
+          }
+        },
+        "debrief": "Selection for fact_retrieval category, total_sentence_count statistic (ablate experiments):\n  - Rollout data: median=380.0, mean=440.6, Q75=573.0, Q25=258.0\n  - Experiment data: median=124.0, mean=335.3, n=3\n  - Above average: Chunk 3 (value=861.0, above Q75=573.0)\n  - Below average: Chunk 41 (value=124.0, below Q25=258.0)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "fact_retrieval"
+      },
+      "plan_generation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 63,
+            "value": 517.0
+          },
+          "average": {
+            "chunk_idx": 63,
+            "value": 517.0
+          },
+          "below_average": {
+            "chunk_idx": 128,
+            "value": 279.0
+          }
+        },
+        "debrief": "Selection for plan_generation category, total_sentence_count statistic (ablate experiments):\n  - Rollout data: median=412.5, mean=466.2, Q75=600.2, Q25=281.0\n  - Experiment data: median=186.0, mean=234.0, n=4\n  - Above average: Chunk 63 (value=517.0, above Q75=600.2)\n  - Average: Chunk 63 (value=517.0, near median=412.5)\n  - Below average: Chunk 128 (value=279.0, below Q25=281.0)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "plan_generation"
+      },
+      "uncertainty_management": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 61,
+            "value": 665.0
+          },
+          "average": {
+            "chunk_idx": 69,
+            "value": 424.0
+          },
+          "below_average": {
+            "chunk_idx": 69,
+            "value": 424.0
+          }
+        },
+        "debrief": "Selection for uncertainty_management category, total_sentence_count statistic (ablate experiments):\n  - Rollout data: median=420.0, mean=499.0, Q75=654.2, Q25=303.8\n  - Experiment data: median=499.0, mean=385.9, n=10\n  - Above average: Chunk 61 (value=665.0, above Q75=654.2)\n  - Average: Chunk 69 (value=424.0, near median=420.0)\n  - Below average: Chunk 69 (value=424.0, below Q25=303.8)",
+        "statistic_name": "Total Sentence Count",
+        "function_tag": "uncertainty_management"
+      }
+    },
+    "total_token_count": {
+      "fact_retrieval": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 3,
+            "value": 6012.0
+          },
+          "below_average": {
+            "chunk_idx": 41,
+            "value": 1144.0
+          }
+        },
+        "debrief": "Selection for fact_retrieval category, total_token_count statistic (ablate experiments):\n  - Rollout data: median=3771.5, mean=4240.8, Q75=5364.2, Q25=2740.0\n  - Experiment data: median=1144.0, mean=2489.3, n=3\n  - Above average: Chunk 3 (value=6012.0, above Q75=5364.2)\n  - Below average: Chunk 41 (value=1144.0, below Q25=2740.0)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "fact_retrieval"
+      },
+      "plan_generation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 63,
+            "value": 4039.0
+          },
+          "average": {
+            "chunk_idx": 63,
+            "value": 4039.0
+          },
+          "below_average": {
+            "chunk_idx": 128,
+            "value": 2518.0
+          }
+        },
+        "debrief": "Selection for plan_generation category, total_token_count statistic (ablate experiments):\n  - Rollout data: median=4070.5, mean=4531.2, Q75=5684.8, Q25=2998.2\n  - Experiment data: median=1751.0, mean=2043.5, n=4\n  - Above average: Chunk 63 (value=4039.0, above Q75=5684.8)\n  - Average: Chunk 63 (value=4039.0, near median=4070.5)\n  - Below average: Chunk 128 (value=2518.0, below Q25=2998.2)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "plan_generation"
+      },
+      "uncertainty_management": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 61,
+            "value": 5672.0
+          },
+          "average": {
+            "chunk_idx": 129,
+            "value": 4160.0
+          },
+          "below_average": {
+            "chunk_idx": 69,
+            "value": 3961.0
+          }
+        },
+        "debrief": "Selection for uncertainty_management category, total_token_count statistic (ablate experiments):\n  - Rollout data: median=4144.5, mean=4741.7, Q75=6074.2, Q25=3149.0\n  - Experiment data: median=4189.0, mean=3280.5, n=10\n  - Above average: Chunk 61 (value=5672.0, above Q75=6074.2)\n  - Average: Chunk 129 (value=4160.0, near median=4144.5)\n  - Below average: Chunk 69 (value=3961.0, below Q25=3149.0)",
+        "statistic_name": "Total Token Count",
+        "function_tag": "uncertainty_management"
+      }
+    },
+    "total_uncertainty_word_count": {
+      "fact_retrieval": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 3,
+            "value": 81.0
+          },
+          "below_average": {
+            "chunk_idx": 41,
+            "value": 11.0
+          }
+        },
+        "debrief": "Selection for fact_retrieval category, total_uncertainty_word_count statistic (ablate experiments):\n  - Rollout data: median=27.0, mean=32.5, Q75=41.0, Q25=18.0\n  - Experiment data: median=46.0, mean=46.0, n=2\n  - Above average: Chunk 3 (value=81.0, above Q75=41.0)\n  - Below average: Chunk 41 (value=11.0, below Q25=18.0)",
+        "statistic_name": "Total Uncertainty Word Count",
+        "function_tag": "fact_retrieval"
+      },
+      "plan_generation": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 63,
+            "value": 15.0
+          },
+          "below_average": {
+            "chunk_idx": 63,
+            "value": 15.0
+          }
+        },
+        "debrief": "Selection for plan_generation category, total_uncertainty_word_count statistic (ablate experiments):\n  - Rollout data: median=27.0, mean=32.8, Q75=42.0, Q25=17.0\n  - Experiment data: median=10.0, mean=10.0, n=3\n  - Above average: Chunk 63 (value=15.0, above Q75=42.0)\n  - Below average: Chunk 63 (value=15.0, below Q25=17.0)",
+        "statistic_name": "Total Uncertainty Word Count",
+        "function_tag": "plan_generation"
+      },
+      "uncertainty_management": {
+        "representatives": {
+          "above_average": {
+            "chunk_idx": 27,
+            "value": 35.0
+          },
+          "average": {
+            "chunk_idx": 43,
+            "value": 31.0
+          },
+          "below_average": {
+            "chunk_idx": 125,
+            "value": 18.0
+          }
+        },
+        "debrief": "Selection for uncertainty_management category, total_uncertainty_word_count statistic (ablate experiments):\n  - Rollout data: median=26.0, mean=30.8, Q75=39.0, Q25=17.0\n  - Experiment data: median=33.5, mean=32.4, n=8\n  - Above average: Chunk 27 (value=35.0, above Q75=39.0)\n  - Average: Chunk 43 (value=31.0, near median=26.0)\n  - Below average: Chunk 125 (value=18.0, below Q25=17.0)",
+        "statistic_name": "Total Uncertainty Word Count",
+        "function_tag": "uncertainty_management"
+      }
+    }
+  },
+  "metadata": {
+    "description": "Representative chunks selected for case study analysis",
+    "selection_criteria": {
+      "above_average": "Value above the 75th percentile of rollout data or above 110% of combined median",
+      "average": "Value within 15% of the combined median of rollout and experiment data",
+      "below_average": "Value below the 25th percentile of rollout data or below 90% of combined median"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+================================================================================
+ABLATE UNCERTAINTY EXPERIMENTS - ACCURACY COMPARISON
+================================================================================
+
+Problem ID: problem_1591
+Ground Truth: 6.17
+
+Chunk Index     Experiment Correct   Status         
+--------------------------------------------------
+3               False                ✗ Incorrect    
+27              True                 ✓ Correct      
+41              True                 ✓ Correct      
+43              True                 ✓ Correct      
+44              False                ✗ Incorrect    
+61              False                ✗ Incorrect    
+63              True                 ✓ Correct      
+69              True                 ✓ Correct      
+70              False                ✗ Incorrect    
+88              False                ✗ Incorrect    
+103             False                ✗ Incorrect    
+124             True                 ✓ Correct      
+125             True                 ✓ Correct      
+127             False                ✗ Incorrect    
+128             True                 ✓ Correct      
+129             False                ✗ Incorrect    
+130             False                ✗ Incorrect    
+
+--------------------------------------------------
+Overall Accuracy 0.4706 (8/17)
+
+Control         ✗ Incorrect     (Answer: 6.07)
+Ablate Overall  0.4706 (8/17)
+Control vs Ablate Control: 0.0000, Ablate: 0.4706, Diff: +0.4706
+
+================================================================================
