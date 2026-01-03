@@ -323,10 +323,3 @@ dataset = load_llama8b_dataset(max_problems=10)
 ```bash
 pip install scipy scikit-learn
 ```
-
-## Support
-
-For issues or questions:
-1. Check the troubleshooting section above
-2. Review dataset documentation: https://huggingface.co/datasets/uzaymacar/math-rollouts
-3. Verify all dependencies are installed correctly
