@@ -12,7 +12,7 @@ import json
 import re
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 import time
 
 # Uncertainty indicators to track
@@ -53,18 +53,19 @@ class ChunkFlipper:
     def solve_with_flipped_chunk(
         self, 
         problem: str, 
-        original_chunks: List[str], 
+        original_chunks_dict: Dict[int, str], 
         chunk_idx: int, 
         flipped_chunk: str,
         max_tokens: int = 7000
     ) -> Dict:
         """
         Solve the problem using original COT but with one chunk flipped.
+        Uses actual chunk_idx from data to properly align chunks.
         
         Args:
             problem: The problem statement
-            original_chunks: List of original chunk texts
-            chunk_idx: Index of the chunk to replace with flipped version
+            original_chunks_dict: Dictionary mapping chunk_idx to chunk text
+            chunk_idx: Actual chunk index to replace with flipped version
             flipped_chunk: The flipped incorrect chunk
             max_tokens: Maximum tokens to generate
         
@@ -73,12 +74,16 @@ class ChunkFlipper:
         """
         # Build the prompt with original chunks up to the flipped chunk, then the flipped chunk
         # Don't provide chunks after the flipped chunk - let the model generate from there
+        # Get all chunk indices sorted, and include all chunks with idx <= chunk_idx
+        sorted_chunk_indices = sorted(original_chunks_dict.keys())
         cot_parts = []
-        for i in range(chunk_idx + 1):  # Only go up to and including the flipped chunk
-            if i == chunk_idx:
+        for orig_chunk_idx in sorted_chunk_indices:
+            if orig_chunk_idx < chunk_idx:
+                cot_parts.append(original_chunks_dict[orig_chunk_idx])  # Use original chunk
+            elif orig_chunk_idx == chunk_idx:
                 cot_parts.append(flipped_chunk)  # Use flipped chunk here
             else:
-                cot_parts.append(original_chunks[i])  # Use original chunks up to this point
+                break  # Stop after the flipped chunk
         
         # Combine into full chain of thought (only up to the flipped chunk)
         full_cot = " ".join(cot_parts)
@@ -175,7 +180,7 @@ Continue solving from here. Therefore, the final answer is \\boxed{{:"""
 def load_problem_data(dataset, problem_id: str):
     """
     Load problem data including original COT chunks (non-forced version).
-    Gets the original chain of thought from correct_base_solution (not forced_answer).
+    Gets the original chain of thought from incorrect_base_solution (not forced_answer).
     """
     problem_data = {
         'problem_json': None,
@@ -199,10 +204,10 @@ def load_problem_data(dataset, problem_id: str):
                 except json.JSONDecodeError:
                     pass
         
-        # Get chunks_labeled.json from correct_base_solution (original COT)
+        # Get chunks_labeled.json from incorrect_base_solution (original COT)
         elif "chunks_labeled.json" in path:
-            # Prefer correct_base_solution over forced_answer for original COT
-            if "correct_base_solution" in path and "forced_answer" not in path.lower():
+            # Prefer incorrect_base_solution over forced_answer for original COT
+            if "incorrect_base_solution" in path and "forced_answer" not in path.lower():
                 try:
                     problem_data['chunks_labeled'] = json.loads(content)
                 except json.JSONDecodeError:
@@ -216,15 +221,27 @@ def load_problem_data(dataset, problem_id: str):
     
     return problem_data
 
-def extract_chunks(chunks_labeled: List[Dict]) -> List[str]:
-    """Extract chunk texts from chunks_labeled.json."""
-    chunks = []
-    for chunk_data in sorted(chunks_labeled, key=lambda x: x.get('chunk_idx', 0)):
+def extract_chunks(chunks_labeled: List[Dict]) -> Tuple[Dict[int, str], List[int]]:
+    """
+    Extract chunk texts from chunks_labeled.json, using actual chunk_idx from data.
+    
+    Returns:
+        Tuple of (dict mapping chunk_idx to chunk_text, sorted list of chunk_indices)
+    """
+    chunks_dict = {}
+    chunk_indices = []
+    
+    for chunk_data in chunks_labeled:
         if isinstance(chunk_data, dict):
+            chunk_idx = chunk_data.get('chunk_idx')
             chunk_text = chunk_data.get('chunk', '')
-            if chunk_text:
-                chunks.append(chunk_text)
-    return chunks
+            if chunk_idx is not None and chunk_text:
+                chunks_dict[chunk_idx] = chunk_text
+                chunk_indices.append(chunk_idx)
+    
+    # Sort chunk indices
+    chunk_indices = sorted(chunk_indices)
+    return chunks_dict, chunk_indices
 
 def load_flipped_chunks(flipped_chunks_file: str) -> List[str]:
     """
@@ -331,9 +348,9 @@ def run_experiment(problem_id: str, flipped_chunks_file: str = "flipped_chunks.t
     print(f"\nProblem: {problem_text[:200]}...")
     print(f"Ground truth answer: {ground_truth}")
     
-    # Extract chunks
-    chunks = extract_chunks(problem_data['chunks_labeled'])
-    print(f"\nFound {len(chunks)} chunks in original COT")
+    # Extract chunks (using actual chunk_idx from data)
+    chunks_dict, chunk_indices = extract_chunks(problem_data['chunks_labeled'])
+    print(f"\nFound {len(chunks_dict)} chunks in original COT (indices: {min(chunk_indices)} to {max(chunk_indices)})")
     
     # Load pre-flipped chunks (required)
     import os
@@ -369,11 +386,11 @@ def run_experiment(problem_id: str, flipped_chunks_file: str = "flipped_chunks.t
             print("  ...")
             return
         
-        if len(pre_flipped_chunks) != len(chunks):
-            print(f"ERROR: Number of flipped chunks ({len(pre_flipped_chunks)}) doesn't match original chunks ({len(chunks)})")
+        if len(pre_flipped_chunks) != len(chunks_dict):
+            print(f"ERROR: Number of flipped chunks ({len(pre_flipped_chunks)}) doesn't match original chunks ({len(chunks_dict)})")
             print("Please ensure the flipped chunks file has the correct number of chunks.")
             return
-        print(f"Loaded {len(pre_flipped_chunks)} pre-flipped chunks (matches {len(chunks)} original chunks)")
+        print(f"Loaded {len(pre_flipped_chunks)} pre-flipped chunks (matches {len(chunks_dict)} original chunks)")
     except Exception as e:
         print(f"Error loading flipped chunks file: {e}")
         import traceback
@@ -388,21 +405,25 @@ def run_experiment(problem_id: str, flipped_chunks_file: str = "flipped_chunks.t
         "problem_id": problem_id,
         "problem": problem_text,
         "ground_truth_answer": ground_truth,
-        "num_chunks": len(chunks),
-        "original_chunks": chunks,
+        "num_chunks": len(chunks_dict),
+        "original_chunks": [chunks_dict[idx] for idx in chunk_indices],  # Keep as list for backward compatibility
         "experiments": []
     }
     
-    # Process each chunk
-    for chunk_idx in range(len(chunks)):
+    # Process each chunk using actual chunk_idx
+    for list_idx, chunk_idx in enumerate(chunk_indices):
         print(f"\n{'='*80}")
-        print(f"Processing chunk {chunk_idx + 1}/{len(chunks)}")
+        print(f"Processing chunk {list_idx + 1}/{len(chunk_indices)} (chunk_idx: {chunk_idx})")
         print(f"{'='*80}")
-        print(f"Original chunk: {chunks[chunk_idx][:150]}...")
+        print(f"Original chunk: {chunks_dict[chunk_idx][:150]}...")
         
-        # Get flipped chunk from file
+        # Get flipped chunk from file (using list index, not chunk_idx)
         print("\nUsing pre-flipped chunk from file...")
-        flipped_chunk = pre_flipped_chunks[chunk_idx]
+        if list_idx < len(pre_flipped_chunks):
+            flipped_chunk = pre_flipped_chunks[list_idx]
+        else:
+            print(f"Warning: No flipped chunk for index {list_idx}, skipping...")
+            continue
         print(f"Flipped chunk: {flipped_chunk[:150]}...")
         
         # Step 2: Solve with flipped chunk
@@ -410,7 +431,7 @@ def run_experiment(problem_id: str, flipped_chunks_file: str = "flipped_chunks.t
         try:
             solution_result = flipper.solve_with_flipped_chunk(
                 problem_text,
-                chunks,
+                chunks_dict,
                 chunk_idx,
                 flipped_chunk,
                 max_tokens=7000
@@ -424,7 +445,7 @@ def run_experiment(problem_id: str, flipped_chunks_file: str = "flipped_chunks.t
             solution_result['is_correct'] = is_correct
             
             solution_result['flipped_chunk'] = flipped_chunk
-            solution_result['original_chunk'] = chunks[chunk_idx]
+            solution_result['original_chunk'] = chunks_dict[chunk_idx]
             
             results['experiments'].append(solution_result)
             
