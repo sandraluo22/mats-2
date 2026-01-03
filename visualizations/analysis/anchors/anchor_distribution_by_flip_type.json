@@ -1,0 +1,42 @@
+{
+  "05percent": {
+    "Trivial logical flip": 2,
+    "Number error (in step\u2019s intermediate output)": 4,
+    "Number error (in process)": 1,
+    "Operation flip": 1,
+    "Incorrect fact retrieval": 0,
+    "Logic flip": 0
+  },
+  "10percent": {
+    "Trivial logical flip": 3,
+    "Number error (in step\u2019s intermediate output)": 7,
+    "Incorrect fact retrieval": 1,
+    "Number error (in process)": 2,
+    "Operation flip": 2,
+    "Logic flip": 1
+  },
+  "15percent": {
+    "Trivial logical flip": 5,
+    "Logic flip": 2,
+    "Incorrect fact retrieval": 4,
+    "Operation flip": 2,
+    "Number error (in process)": 3,
+    "Number error (in step\u2019s intermediate output)": 7
+  },
+  "20percent": {
+    "Trivial logical flip": 9,
+    "Logic flip": 4,
+    "Incorrect fact retrieval": 5,
+    "Operation flip": 2,
+    "Number error (in process)": 3,
+    "Number error (in step\u2019s intermediate output)": 8
+  },
+  "25percent": {
+    "Trivial logical flip": 12,
+    "Logic flip": 5,
+    "Incorrect fact retrieval": 6,
+    "Operation flip": 3,
+    "Number error (in process)": 3,
+    "Number error (in step\u2019s intermediate output)": 9
+  }
+}

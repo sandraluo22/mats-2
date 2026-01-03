@@ -1,0 +1,59 @@
+====================================================================================================
+STATISTICAL ANALYSIS: anchor_accuracy_table_05percent.txt
+====================================================================================================
+
+Data Summary:
+  Total observations: 8
+  Correct outcomes: 6
+  Incorrect outcomes: 2
+  Mean control correctness: 0.7800
+  Mean outcome: 0.7500
+
+====================================================================================================
+CHI-SQUARE GOODNESS OF FIT TEST
+====================================================================================================
+
+Chi-square statistic: 14.8924
+Degrees of freedom: 4
+P-value: 0.004930
+
+Bin Analysis:
+Bin Range            Total Obs       Observed Success     Expected Success    
+----------------------------------------------------------------------------------------------------
+[0.0, 0.2)           0               0.00                 0.00                
+[0.2, 0.4)           0               0.00                 0.00                
+[0.4, 0.6)           0               0.00                 0.00                
+[0.6, 0.8)           5               5.00                 3.50                
+[0.8, 1.0)           3               1.00                 2.74                
+
+====================================================================================================
+LOG LIKELIHOOD MODEL COMPARISON
+====================================================================================================
+
+Model 1: Honest Use of Probabilities (uses p_i)
+  Log Likelihood: -6.8128
+  AIC: 15.6255
+  BIC: 15.7050
+
+Model 2: Flipped Probabilities (uses 1 - p_i)
+  Log Likelihood: -8.6135
+  AIC: 19.2271
+  BIC: 19.3065
+
+Model 3: Ignores Probabilities (uses constant mean)
+  Constant Probability: 0.7500
+  Log Likelihood: -4.4987
+  AIC: 10.9974
+  BIC: 11.0768
+
+Model Comparison:
+Model                          Log Likelihood       AIC             BIC            
+----------------------------------------------------------------------------------------------------
+Honest (uses p_i)              -6.8128              15.6255         15.7050        
+Flipped (uses 1-p_i)           -8.6135              19.2271         19.3065        
+Ignores (constant)             -4.4987              10.9974         11.0768        
+
+Best Model (by AIC): ignores
+Best Model (by BIC): ignores
+
+====================================================================================================

@@ -1,0 +1,41 @@
+================================================================================
+ANCHOR CHUNK EXPERIMENTS - ACCURACY COMPARISON
+================================================================================
+
+Problem ID: problem_1591
+Ground Truth: 6.17
+Total Anchor Chunks: 23
+Anchor Chunks with Experiments: 23
+
+Chunk Index     Control Correct %    Flip Correct    Ablate Correct 
+--------------------------------------------------------------------------------
+3               77.00%               False           False          
+5               70.00%               True            N/A            
+8               68.00%               False           N/A            
+9               75.00%               False           N/A            
+10              74.00%               True            N/A            
+11              72.00%               False           N/A            
+13              75.00%               True            N/A            
+17              61.00%               True            N/A            
+21              68.00%               True            N/A            
+23              73.00%               True            N/A            
+25              68.00%               True            N/A            
+28              71.00%               False           N/A            
+30              82.00%               True            N/A            
+31              69.00%               True            N/A            
+33              70.00%               True            N/A            
+34              75.00%               True            N/A            
+39              77.00%               True            N/A            
+46              91.00%               False           N/A            
+47              90.00%               True            N/A            
+48              91.00%               True            N/A            
+50              88.00%               True            N/A            
+51              80.00%               True            N/A            
+56              92.00%               False           N/A            
+
+--------------------------------------------------------------------------------
+Overall Control 76.39%                                              
+Flip Accuracy                        69.57% (16/23)                 
+Ablate Accuracy                                      0.00% (0/1)    
+
+================================================================================

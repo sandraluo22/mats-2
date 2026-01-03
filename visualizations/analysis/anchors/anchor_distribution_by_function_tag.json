@@ -1,0 +1,42 @@
+{
+  "05percent": {
+    "uncertainty_management": 1,
+    "fact_retrieval": 1,
+    "active_computation": 6,
+    "plan_generation": 0,
+    "problem_setup": 0,
+    "result_consolidation": 0
+  },
+  "10percent": {
+    "uncertainty_management": 1,
+    "plan_generation": 3,
+    "fact_retrieval": 2,
+    "active_computation": 10,
+    "problem_setup": 0,
+    "result_consolidation": 0
+  },
+  "15percent": {
+    "fact_retrieval": 6,
+    "plan_generation": 4,
+    "problem_setup": 1,
+    "active_computation": 11,
+    "uncertainty_management": 1,
+    "result_consolidation": 0
+  },
+  "20percent": {
+    "fact_retrieval": 10,
+    "plan_generation": 5,
+    "uncertainty_management": 2,
+    "problem_setup": 1,
+    "active_computation": 13,
+    "result_consolidation": 0
+  },
+  "25percent": {
+    "problem_setup": 3,
+    "fact_retrieval": 10,
+    "plan_generation": 5,
+    "uncertainty_management": 4,
+    "result_consolidation": 1,
+    "active_computation": 15
+  }
+}

@@ -1,0 +1,33 @@
+================================================================================
+ANCHOR CHUNK EXPERIMENTS - ACCURACY COMPARISON
+================================================================================
+
+Problem ID: problem_1591
+Ground Truth: 6.17
+Total Anchor Chunks: 16
+Anchor Chunks with Experiments: 16
+
+Chunk Index     Control Correct %    Flip Correct    Ablate Correct 
+--------------------------------------------------------------------------------
+5               70.00%               True            N/A            
+13              75.00%               True            N/A            
+21              68.00%               True            N/A            
+23              73.00%               True            N/A            
+25              68.00%               True            N/A            
+28              71.00%               False           N/A            
+30              82.00%               True            N/A            
+31              69.00%               True            N/A            
+33              70.00%               True            N/A            
+34              75.00%               True            N/A            
+39              77.00%               True            N/A            
+46              91.00%               False           N/A            
+47              90.00%               True            N/A            
+48              91.00%               True            N/A            
+50              88.00%               True            N/A            
+56              92.00%               False           N/A            
+
+--------------------------------------------------------------------------------
+Overall Control 78.12%                                              
+Flip Accuracy                        81.25% (13/16)                 
+
+================================================================================

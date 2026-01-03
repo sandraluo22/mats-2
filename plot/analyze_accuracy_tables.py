@@ -66,19 +66,43 @@ def parse_accuracy_table(table_file: str) -> List[Tuple[bool, float]]:
         # Check if table has "Control Correct %" column
         has_control_col = 'Control Correct %' in content
         
+        # Check if this is an anchor table (has both Flip Correct and Ablate Correct columns)
+        is_anchor_table = 'Flip Correct' in content and 'Ablate Correct' in content
+        
         in_data_section = False
         for line in lines:
             if 'Chunk Index' in line or (line.strip().startswith('-') and in_data_section):
                 in_data_section = True
                 continue
             
-            if 'Overall Accuracy' in line or 'Control Overall' in line or 'Flip Overall' in line or 'Ablate Overall' in line:
+            if 'Overall Accuracy' in line or 'Control Overall' in line or 'Flip Overall' in line or 'Ablate Overall' in line or 'Flip Accuracy' in line or 'Ablate Accuracy' in line or 'Type Accuracy' in line or 'OVERALL SUMMARY' in line:
+                # For flip type tables, continue parsing after "Type Accuracy" lines
+                if 'Type Accuracy' in line:
+                    continue
                 break
             
             if in_data_section and line.strip() and not line.strip().startswith('-'):
                 parts = line.split()
                 
-                if has_control_col and len(parts) >= 3:
+                if is_anchor_table and has_control_col and len(parts) >= 4:
+                    # Format: chunk_idx control_pct flip_correct ablate_correct
+                    try:
+                        control_pct_str = parts[1].rstrip('%')
+                        control_pct = float(control_pct_str)
+                        
+                        # Use flip_correct if available, otherwise ablate_correct
+                        is_correct_str = None
+                        for i in range(2, min(4, len(parts))):
+                            if parts[i].lower() in ['true', 'false']:
+                                is_correct_str = parts[i].lower()
+                                break
+                        
+                        if is_correct_str is not None:
+                            is_correct = is_correct_str == 'true'
+                            pairs.append((is_correct, control_pct / 100.0))
+                    except (ValueError, IndexError):
+                        continue
+                elif has_control_col and len(parts) >= 3:
                     # Format: chunk_idx control_pct experiment_correct
                     try:
                         control_pct_str = parts[1].rstrip('%')
@@ -387,8 +411,25 @@ def main():
         {
             'input': str(PROJECT_ROOT / "visualizations/analysis/repeated_final_answers_accuracy_table.txt"),
             'output': str(PROJECT_ROOT / "visualizations/analysis/repeated_final_answers_analysis.txt")
+        },
+        {
+            'input': str(PROJECT_ROOT / "visualizations/analysis/anchor_accuracy_table.txt"),
+            'output': str(PROJECT_ROOT / "visualizations/analysis/anchor_accuracy_analysis.txt")
+        },
+        {
+            'input': str(PROJECT_ROOT / "visualizations/analysis/flip_type_accuracy_table.txt"),
+            'output': str(PROJECT_ROOT / "visualizations/analysis/flip_type_accuracy_analysis.txt")
         }
     ]
+    
+    # Add percentile anchor tables
+    for percentile in ['05percent', '15percent', '20percent', '25percent']:
+        anchor_table = PROJECT_ROOT / f"visualizations/analysis/anchors/anchor_accuracy_table_{percentile}.txt"
+        if anchor_table.exists():
+            tables.append({
+                'input': str(anchor_table),
+                'output': str(PROJECT_ROOT / f"visualizations/analysis/anchors/anchor_accuracy_analysis_{percentile}.txt")
+            })
     
     for table_info in tables:
         analyze_table(table_info['input'], table_info['output'])

@@ -347,6 +347,7 @@ def plot_anchor_statistics(
     fig.legend(legend2_elements, legend2_labels, loc='upper right', fontsize=9, framealpha=0.9, ncol=2)
     
     # Save plot
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
     output_path = Path(output_dir) / f"anchor_statistics{title_suffix.replace(' ', '_').lower()}.png"
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
@@ -355,12 +356,28 @@ def plot_anchor_statistics(
 
 def main():
     """Main function."""
+    import sys
+    
+    # Allow command-line arguments for anchors file and percentile string
+    anchors_file = None
+    percentile_str = None
+    if len(sys.argv) > 1:
+        anchors_file = sys.argv[1]
+    if len(sys.argv) > 2:
+        percentile_str = sys.argv[2]
+    
     problem_id = "problem_1591"
     dataset_path = str(PROJECT_ROOT / f"{problem_id}_dataset")
     flip_file = str(PROJECT_ROOT / "flip_chunk_results.json")
     ablate_file = str(PROJECT_ROOT / "ablate_uncertainty_results.json")
-    anchors_file = str(PROJECT_ROOT / "visualizations/analysis/anchors.json")
-    output_dir = str(PROJECT_ROOT / "visualizations/chunk_statistics_plots")
+    
+    if anchors_file is None:
+        anchors_file = str(PROJECT_ROOT / "visualizations/analysis/anchors.json")
+    
+    if percentile_str:
+        output_dir = str(PROJECT_ROOT / f"visualizations/chunk_statistics_plots/anchors/anchor_statistics_{percentile_str}")
+    else:
+        output_dir = str(PROJECT_ROOT / "visualizations/chunk_statistics_plots")
     
     print("="*80)
     print("ANCHOR STATISTICS PLOTTING")
