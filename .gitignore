@@ -48,8 +48,9 @@ models/
 *.bin
 *.safetensors
 
-# Generated outputs
+# Generated outputs (except visualizations)
 *.png
+!visualizations/**/*.png
 *.jpg
 *.jpeg
 *.pdf
