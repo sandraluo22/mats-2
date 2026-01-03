@@ -439,11 +439,24 @@ def generate_case_study_json(
             
             # Only add if we found at least one representative
             if any(v is not None for v in representatives.values()):
+                # Add full_cot for each representative
+                representatives_with_cot = {}
+                for rep_type, rep_data in representatives.items():
+                    if rep_data is not None:
+                        chunk_idx = rep_data['chunk_idx']
+                        # Get full_cot from experiment data
+                        flip_entry = all_flip_data.get(chunk_idx, {})
+                        full_cot = flip_entry.get('full_cot', '')
+                        representatives_with_cot[rep_type] = {
+                            **rep_data,
+                            'full_cot': full_cot
+                        }
+                
                 # Create debrief
                 debrief = create_debrief(rollout_data, tag_flip_values, representatives, stat_key, tag, 'flip')
                 
                 case_study['flip_chunks'][stat_key][tag] = {
-                    'representatives': {k: v for k, v in representatives.items() if v is not None},
+                    'representatives': representatives_with_cot,
                     'debrief': debrief,
                     'statistic_name': stat_name,
                     'function_tag': tag
@@ -485,11 +498,24 @@ def generate_case_study_json(
             
             # Only add if we found at least one representative
             if any(v is not None for v in representatives.values()):
+                # Add full_cot for each representative
+                representatives_with_cot = {}
+                for rep_type, rep_data in representatives.items():
+                    if rep_data is not None:
+                        chunk_idx = rep_data['chunk_idx']
+                        # Get full_cot from experiment data
+                        ablate_entry = all_ablate_data.get(chunk_idx, {})
+                        full_cot = ablate_entry.get('full_cot', '')
+                        representatives_with_cot[rep_type] = {
+                            **rep_data,
+                            'full_cot': full_cot
+                        }
+                
                 # Create debrief
                 debrief = create_debrief(rollout_data, tag_ablate_values, representatives, stat_key, tag, 'ablate')
                 
                 case_study['ablate_chunks'][stat_key][tag] = {
-                    'representatives': {k: v for k, v in representatives.items() if v is not None},
+                    'representatives': representatives_with_cot,
                     'debrief': debrief,
                     'statistic_name': stat_name,
                     'function_tag': tag
@@ -608,31 +634,10 @@ def main():
     
     print(f"\n✓ Processed {chunks_processed} chunks")
     
-    # Calculate experiment statistics
-    print("\nCalculating experiment statistics...")
-    all_flip_data = {}
-    for chunk_idx, flip_entry in flip_results.items():
-        flip_stats = {}
-        for stat_key in ['total_sentence_count', 'total_token_count', 'total_uncertainty_word_count']:
-            value = calculate_experiment_statistics(
-                flip_results, chunk_idx, original_chunks_dict, tokenizer, stat_key
-            )
-            if value is not None:
-                flip_stats[stat_key] = value
-        if flip_stats:
-            all_flip_data[chunk_idx] = flip_stats
-    
-    all_ablate_data = {}
-    for chunk_idx, ablate_entry in ablate_results.items():
-        ablate_stats = {}
-        for stat_key in ['total_sentence_count', 'total_token_count', 'total_uncertainty_word_count']:
-            value = calculate_experiment_statistics(
-                ablate_results, chunk_idx, original_chunks_dict, tokenizer, stat_key
-            )
-            if value is not None:
-                ablate_stats[stat_key] = value
-        if ablate_stats:
-            all_ablate_data[chunk_idx] = ablate_stats
+    # Store experiment data (already has statistics calculated in load_experiment_results)
+    print("\nPreparing experiment data...")
+    all_flip_data = flip_results  # Already contains full_cot and statistics
+    all_ablate_data = ablate_results  # Already contains full_cot and statistics
     
     print(f"✓ Calculated statistics for {len(all_flip_data)} flip chunks and {len(all_ablate_data)} ablate chunks")
     

@@ -1,0 +1,59 @@
+====================================================================================================
+STATISTICAL ANALYSIS: repeated_final_answers_accuracy_table.txt
+====================================================================================================
+
+Data Summary:
+  Total observations: 30
+  Correct outcomes: 15
+  Incorrect outcomes: 15
+  Mean control correctness: 0.6930
+  Mean outcome: 0.5000
+
+====================================================================================================
+CHI-SQUARE GOODNESS OF FIT TEST
+====================================================================================================
+
+Chi-square statistic: 58.1892
+Degrees of freedom: 4
+P-value: 0.000000
+
+Bin Analysis:
+Bin Range            Total Obs       Observed Success     Expected Success    
+----------------------------------------------------------------------------------------------------
+[0.0, 0.2)           3               0.00                 0.09                
+[0.2, 0.4)           1               0.00                 0.27                
+[0.4, 0.6)           4               2.00                 1.90                
+[0.6, 0.8)           9               8.00                 6.48                
+[0.8, 1.0)           13              5.00                 12.05               
+
+====================================================================================================
+LOG LIKELIHOOD MODEL COMPARISON
+====================================================================================================
+
+Model 1: Honest Use of Probabilities (uses p_i)
+  Log Likelihood: -109.5566
+  AIC: 221.1132
+  BIC: 222.5144
+
+Model 2: Flipped Probabilities (uses 1 - p_i)
+  Log Likelihood: -55.8743
+  AIC: 113.7485
+  BIC: 115.1497
+
+Model 3: Ignores Probabilities (uses constant mean)
+  Constant Probability: 0.5000
+  Log Likelihood: -20.7944
+  AIC: 43.5888
+  BIC: 44.9900
+
+Model Comparison:
+Model                          Log Likelihood       AIC             BIC            
+----------------------------------------------------------------------------------------------------
+Honest (uses p_i)              -109.5566            221.1132        222.5144       
+Flipped (uses 1-p_i)           -55.8743             113.7485        115.1497       
+Ignores (constant)             -20.7944             43.5888         44.9900        
+
+Best Model (by AIC): ignores
+Best Model (by BIC): ignores
+
+====================================================================================================

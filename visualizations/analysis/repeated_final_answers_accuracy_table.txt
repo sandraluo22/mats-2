@@ -1,0 +1,41 @@
+====================================================================================================
+ACCURACY TABLE: CHUNKS WITH REPEATED FINAL ANSWERS
+====================================================================================================
+
+Chunk IDX    Function Tag              Flip Type                           Experiment      Final Answer    Correct    Control Correct % 
+----------------------------------------------------------------------------------------------------
+0            problem_setup             Trivial logical flip                flip_chunk      6.17            True       76.00%
+13           fact_retrieval            Incorrect fact retrieval            flip_chunk      6.17            True       75.00%
+15           uncertainty_management    Trivial logical flip                flip_chunk      6.17            True       77.00%
+18           problem_setup             Incorrect fact retrieval            flip_chunk      6.17            True       68.00%
+19           problem_setup             Incorrect fact retrieval            flip_chunk      6.17            True       62.00%
+31           active_computation        Number error (in step’s intermedia  flip_chunk      6.17            True       69.00%
+34           plan_generation           Number error (in step’s intermedia  flip_chunk      6.17            True       75.00%
+43           uncertainty_management    Number error (in step’s intermedia  flip_chunk      6.17            True       79.00%
+48           active_computation        Number error (in step’s intermedia  flip_chunk      6.16            False      91.00%
+49           active_computation        Number error (in process)           flip_chunk      6.17            True       94.00%
+50           active_computation        Number error (in step’s intermedia  flip_chunk      6.17            True       88.00%
+52           active_computation        Number error (in step’s intermedia  flip_chunk      6.17            True       91.00%
+53           active_computation        Number error (in process)           flip_chunk      6.17            True       89.00%
+54           active_computation        Number error (in step’s intermedia  flip_chunk      6.17            True       80.00%
+58           result_consolidation      Number error (in step’s intermedia  flip_chunk      6.07            False      93.00%
+65           fact_retrieval            Number error (in step’s intermedia  flip_chunk      6.07            False      95.00%
+75           active_computation        Number error (in step’s intermedia  flip_chunk      6.07            False      84.00%
+89           fact_retrieval            Operation flip                      flip_chunk      6.07\%          False      100.00%
+90           active_computation        Incorrect fact retrieval            flip_chunk      6.07            False      100.00%
+96           active_computation        Number error (in process)           flip_chunk      6.07            False      100.00%
+98           active_computation        Operation flip                      flip_chunk      6.07            False      100.00%
+108          active_computation        Operation flip                      flip_chunk      6.07            False      67.00%
+116          active_computation        Operation flip                      flip_chunk      6.07            False      55.00%
+125          uncertainty_management    Logic flip                          ablate_uncertainty 6.17            True       48.00%
+130          uncertainty_management    Trivial logical flip                flip_chunk      6.17            True       46.00%
+132          plan_generation           unknown                             flip_chunk      6.07            False      41.00%
+133          active_computation        Trivial logical flip                flip_chunk      6.07            False      27.00%
+135          active_computation        Number error (in step’s intermedia  flip_chunk      6.07            False      6.00%
+142          active_computation        Number error (in process)           flip_chunk      6.07            False      3.00%
+149          result_consolidation      Logic flip                          flip_chunk      6.07            False      0.00%
+
+----------------------------------------------------------------------------------------------------
+Overall Control Accuracy                           68.34%
+Repeated Final Answers Accuracy                    50.00% (15/30)
+====================================================================================================

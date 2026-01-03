@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from datasets import load_from_disk
 from transformers import AutoTokenizer
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Set
 import os
 from pathlib import Path
 
@@ -210,6 +210,19 @@ def load_chunk_function_tags(dataset) -> Dict[int, List[str]]:
     
     return chunk_tags
 
+def load_anchors(anchors_file: str) -> Set[int]:
+    """Load anchor chunk indices."""
+    anchor_set = set()
+    if not Path(anchors_file).exists():
+        return anchor_set
+    with open(anchors_file, 'r') as f:
+        data = json.load(f)
+        for anchor in data.get('anchors', []):
+            chunk_idx = anchor.get('chunk_idx')
+            if chunk_idx is not None:
+                anchor_set.add(chunk_idx)
+    return anchor_set
+
 def load_experiment_results(flip_file: str, ablate_file: str, tokenizer: AutoTokenizer) -> Tuple[Dict[int, Dict], Dict[int, Dict]]:
     """
     Load experiment results from JSON files and calculate total counts from full_cot.
@@ -281,6 +294,7 @@ def plot_aggregated_statistics(
     all_flip_data: Dict[int, Dict],
     all_ablate_data: Dict[int, Dict],
     chunk_function_tags: Dict[int, List[str]],
+    anchor_set: Set[int] = None,
     output_dir: str = "visualizations/chunk_statistics_plots",
     remove_outliers: bool = False,
     outlier_percentile: float = 0.75
@@ -497,6 +511,7 @@ def plot_split_computation_statistics(
     all_flip_data: Dict[int, Dict],
     all_ablate_data: Dict[int, Dict],
     chunk_function_tags: Dict[int, List[str]],
+    anchor_set: Set[int] = None,
     output_dir: str = "visualizations/chunk_statistics_plots",
     remove_outliers: bool = False,
     outlier_percentile: float = 0.75
@@ -824,29 +839,35 @@ def main():
     total_data_points = sum(sum(len(v) for v in stats.values()) for stats in all_rollout_stats_by_chunk.values())
     print(f"  ✓ Collected {total_data_points} data points across all chunks")
     
+    # Load anchors
+    print("Loading anchors...")
+    anchors_file = str(PROJECT_ROOT / "visualizations/analysis/anchors.json")
+    anchor_set = load_anchors(anchors_file)
+    print(f"✓ Loaded {len(anchor_set)} anchor chunks")
+    
     # Create aggregated plot (with outliers)
     print("\n" + "="*80)
     print("GENERATING AGGREGATED PLOT")
     print("="*80)
-    plot_aggregated_statistics(all_rollout_stats_by_chunk, flip_results, ablate_results, chunk_function_tags, output_dir, remove_outliers=False)
+    plot_aggregated_statistics(all_rollout_stats_by_chunk, flip_results, ablate_results, chunk_function_tags, anchor_set, output_dir, remove_outliers=False)
     
     # Create aggregated plot (without outliers for sentence count)
     print("\n" + "="*80)
     print("GENERATING AGGREGATED PLOT (NO OUTLIERS)")
     print("="*80)
-    plot_aggregated_statistics(all_rollout_stats_by_chunk, flip_results, ablate_results, chunk_function_tags, output_dir, remove_outliers=True, outlier_percentile=0.25)
+    plot_aggregated_statistics(all_rollout_stats_by_chunk, flip_results, ablate_results, chunk_function_tags, anchor_set, output_dir, remove_outliers=True, outlier_percentile=0.25)
     
     # Create split computation aggregated plot (with outliers)
     print("\n" + "="*80)
     print("GENERATING SPLIT COMPUTATION AGGREGATED PLOT")
     print("="*80)
-    plot_split_computation_statistics(all_rollout_stats_by_chunk, flip_results, ablate_results, chunk_function_tags, output_dir, remove_outliers=False)
+    plot_split_computation_statistics(all_rollout_stats_by_chunk, flip_results, ablate_results, chunk_function_tags, anchor_set, output_dir, remove_outliers=False)
     
     # Create split computation aggregated plot (without outliers for sentence count)
     print("\n" + "="*80)
     print("GENERATING SPLIT COMPUTATION AGGREGATED PLOT (NO OUTLIERS)")
     print("="*80)
-    plot_split_computation_statistics(all_rollout_stats_by_chunk, flip_results, ablate_results, chunk_function_tags, output_dir, remove_outliers=True, outlier_percentile=0.25)
+    plot_split_computation_statistics(all_rollout_stats_by_chunk, flip_results, ablate_results, chunk_function_tags, anchor_set, output_dir, remove_outliers=True, outlier_percentile=0.25)
     
     print("\n" + "="*80)
     print("PLOTTING COMPLETE")
